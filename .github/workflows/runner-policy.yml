@@ -1,0 +1,19 @@
+name: runner-policy
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: runner-policy-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  runner-policy:
+    # Immutable supply-chain pin; v1.17.0.
+    uses: fondomp-production/platform-workflows/.github/workflows/runner-policy.yml@c086fdba70559e5eb244a682580e227e2f7c3a28
+
